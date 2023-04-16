@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import braj_diary from "../assets/braj_diary.JPG";
-import pratigya_diary from "../assets/pratigya_diary.JPG";
+
 import {
   Box,
   Flex,
@@ -28,7 +27,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-const Links = ["Dashboard", "Projects", "Team"];
+
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -60,16 +59,24 @@ export default function Navbar() {
   const gotoGallery = () => {
     navigate("/gallery");
   };
+   setInterval(() => {
+     let date = new Date();
+     let clock = document.getElementById("clock");
+     clock.innerHTML =
+       date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+   }, 1000);
   let name = localStorage.getItem("name") || "";
-
+  let avatar_url = localStorage.getItem("avatar_url") || "";
   return (
     <>
       <Box
-        bg={useColorModeValue("pink.300", "gray.700")}
+        bgGradient={[
+          "linear(to-tr, teal.400, yellow.500)",
+          "linear(to-t, yellow.500, teal.500)",
+          "linear(to-b, orange.200, purple.500)",
+        ]}
         px={4}
-        position="fixed"
         width="100%"
-        
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
@@ -81,7 +88,7 @@ export default function Navbar() {
             colorScheme="none"
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Link href="/">
+            <Link to="/">
               <Text
                 color={"white"}
                 fontWeight={700}
@@ -106,14 +113,14 @@ export default function Navbar() {
                 colorScheme="none"
                 rounded={"full"}
                 onClick={gotoNote}
-                _hover={{ color: "blue.500" }}
+                className="hover-1"
               >
-                NOTE
+                WRITE A NOTE
               </Button>
               <Button
                 colorScheme="none"
                 rounded={"full"}
-                _hover={{ color: "blue.500" }}
+                className="hover-1"
                 onClick={gotoGallery}
               >
                 GALLERY
@@ -121,7 +128,7 @@ export default function Navbar() {
               <Button
                 colorScheme="none"
                 rounded={"full"}
-                _hover={{ color: "blue.500" }}
+                className="hover-1"
                 onClick={gotoDiary}
               >
                 My Diary
@@ -129,9 +136,18 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"} justify={"space-around"}>
-            <Button onClick={toggleColorMode} colorScheme="none">
-              {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-            </Button>
+            <strong>
+              <Box
+                id="clock"
+                color="white"
+                fontSize={"2xl"}
+                border={"2px solid white"}
+                padding={"0px 10px 0px 10px"}
+                borderRadius={"5px"}
+                marginRight={"20px"}
+              ></Box>
+            </strong>
+
             <Menu>
               <MenuButton
                 as={Button}
@@ -143,11 +159,9 @@ export default function Navbar() {
                 <Avatar
                   size={"sm"}
                   src={
-                    name === "bm"
-                      ? braj_diary
-                      : "" || name === "pratigya"
-                      ? pratigya_diary
-                      : ""
+                    authState.isAuth
+                      ? "https://avatars.dicebear.com/api/male/username.svg"
+                      : "https://icon-library.com/images/icon-login/icon-login-12.jpg"
                   }
                 />
               </MenuButton>
@@ -157,11 +171,9 @@ export default function Navbar() {
                   <Avatar
                     size={"2xl"}
                     src={
-                      name === "bm"
-                        ? braj_diary
-                        : "" || name === "pratigya"
-                        ? braj_diary
-                        : ""
+                      authState.isAuth
+                        ? "https://avatars.dicebear.com/api/male/username.svg"
+                        : "https://icon-library.com/images/icon-login/icon-login-12.jpg"
                     }
                   />
                 </Center>
@@ -169,7 +181,7 @@ export default function Navbar() {
                 <Center>
                   {authState.isAuth ? (
                     <Text fontWeight={"semibold"} mt={4} fontSize={"18px"}>
-                      Welcome {name}
+                      {name}
                     </Text>
                   ) : (
                     <Text fontWeight={"semibold"} mt={4}>

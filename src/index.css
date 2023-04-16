@@ -1,43 +1,119 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
 
-#galleryGrid {
-  width: 90%;
-  margin: auto;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
+
+
 
 #galleryGrid img {
-  border-radius: 10px;
+  border-radius: 5px;
 
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    rgba(187, 13, 13, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(165, 21, 21, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-#galleryGrid img:hover {
- box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
-}
 
-@media all and (min-width:350px) and (max-width:670px) {
+
+@media all and (min-width:335px) and (max-width:670px) {
   #galleryGrid {
  
   grid-template-columns: repeat(2, 1fr);
   
 }
 }
+
+.custom-file-input {
+  color: transparent;
+  width:150px;
+  height:40px;
+  
+  align-items: center;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Click here to upload';
+  color: black;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  
+  border-radius: 3px;
+  padding: 2px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 600;
+  font-size: 10pt;
+  color:blue
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}
+
+#person{
+  width:100%;
+  font-style: italic;
+  font-size: larger;
+  font-weight: bold;
+}
+
+label{
+  color:grey;
+}
+
+#dateLine{
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+/* for  hover over gallery images */
+
+
+
+
+
+
+
+/* for hover over buttons */
+.hover-1 {
+  --c:yellow; /* the color */
+  --s: .15em;
+  
+  line-height:1.1em;
+  padding-bottom: calc(2.1*var(--s));
+  background: 
+    conic-gradient(from 135deg at top,var(--c) 90deg,#0000 0) 
+      left 0 bottom var(--s)/calc(2*var(--s)) var(--s) repeat-x,
+    conic-gradient(from -45deg at bottom,var(--c) 90deg,#0000 0) 
+      left var(--s) bottom 0/calc(2*var(--s)) var(--s) repeat-x;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0) 0/var(--_p,0%) padding-box no-repeat;
+  transition: .5s;
+}
+.hover-1:hover {
+  --_p: 100%;
+  color: var(--c);
+}
+
+
+
+
 

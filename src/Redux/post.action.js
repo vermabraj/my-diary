@@ -1,15 +1,20 @@
 import axios from "axios";
 import {
+  ADD_GALLERY_SUCCESS,
   ADD_POST_FAILURE,
   ADD_POST_LOADING,
   ADD_POST_SUCCESS,
+    FILTER_BY_MR,
+    GALLERY_GET_ERROR,
+    GALLERY_GET_LOADING,
+    GALLERY_GET_SUCCESS,
     POST_GET_DELETE,
   POST_GET_ERROR,
   POST_GET_LOADING,
   POST_GET_SUCCESS,
 } from "./post.types";
 
-import { addPostApi, postApi } from "./postApi";
+import { addGalleryApi, addPostApi, getGalleryApi, postApi } from "./postApi";
 
 export const getPosts = () => async(dispatch) => {
   dispatch({ type: POST_GET_LOADING });
@@ -21,7 +26,14 @@ export const getPosts = () => async(dispatch) => {
     dispatch({ type: POST_GET_ERROR });
   }
 };
+export const getPostsMr = () => async (dispatch) => {
+  
+ 
+    let data = await postApi();
 
+    dispatch({ type: FILTER_BY_MR, payload: data });
+
+};
 export const deletePosts = (id) => async (dispatch) => {
  
   try {
@@ -43,11 +55,31 @@ export const addProducts = (payload) => async(dispatch) => {
   dispatch({ type: ADD_POST_LOADING});
   try {
     let data = await addPostApi(payload);
-     
+    
     dispatch({ type: ADD_POST_SUCCESS, payload: data });
   } catch (err) {
     dispatch({ type: ADD_POST_FAILURE});
   }
 };
 
+export const getGallery = () => async (dispatch) => {
+  dispatch({ type: ADD_POST_LOADING });
+  try {
+    let data = await getGalleryApi();
 
+    dispatch({ type: GALLERY_GET_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({ type: ADD_POST_FAILURE });
+  }
+};
+
+export const addGallery = (payload) => async (dispatch) => {
+  dispatch({ type: GALLERY_GET_LOADING });
+  try {
+    let data = await addGalleryApi(payload);
+
+    dispatch({ type: ADD_GALLERY_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({ type: GALLERY_GET_ERROR });
+  }
+};

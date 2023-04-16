@@ -26,7 +26,7 @@ const Login = () => {
     };
     
 
-    fetch("https://busy-jade-bass-coat.cyclic.app/users/login", {
+    fetch("https://good-blue-cygnet-cuff.cyclic.app/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,13 +36,12 @@ const Login = () => {
       .then((res) => res.json())
       .then((res) => {
         localStorage.setItem("name", res.first_name);
-        console.log(res);
+        
+       
         if (res.token) {
           loginUser(res.token);
           localStorage.setItem("token", res.token);
 
-          
-          
           navigate("/");
         }
       })
@@ -57,7 +56,7 @@ const Login = () => {
         width={["90%", "70%", "60%", "30%"]}
         m="auto"
         height={"auto"}
-        mt={["130px", "130px", "130px", "170px"]}
+        mt={ "80px"}
         border="1px solid gainsboro"
         borderRadius="15px"
         boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
@@ -124,7 +123,7 @@ const Login = () => {
             _hover={{
               bg: "#FF3E6C",
             }}
-            isFullWidth
+          
             onClick={handleSubmit}
           >
             LOGIN NOW
