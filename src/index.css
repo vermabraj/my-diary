@@ -75,13 +75,13 @@ label{
   color:grey;
 }
 
-#dateLine{
+/* #dateLine{
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 250px;
-}
+} */
 
 /* for  hover over gallery images */
 

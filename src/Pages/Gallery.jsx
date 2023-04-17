@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -19,7 +18,7 @@ const GalleryPhotos = () => {
   const dispatch = useDispatch();
 
   const intitalState = {
-    img: "",
+    imageSrc: "",
     date: new Date().toString(),
   };
   const reducerFunction = (state, { type, payload }) => {
@@ -27,7 +26,7 @@ const GalleryPhotos = () => {
       case "img": {
         return {
           ...state,
-          img: payload,
+          imageSrc: payload,
         };
       }
 
@@ -93,14 +92,10 @@ const GalleryPhotos = () => {
     }
   };
 
- 
-const myTimeout = setTimeout(myGreeting, 5000);
+  useEffect(() => {
+    dispatch(getGallery());
+  }, []);
 
-function myGreeting() {
-   
-     dispatch(getGallery());
-   
-}
   if (loading)
     return (
       <>
@@ -109,8 +104,8 @@ function myGreeting() {
     );
   if (error) return <h1>...Error</h1>;
   return (
-    <div id="gallery">
-      <Box textAlign={"center"} padding={"10px"}>
+    <Box id="gallery" margin={"auto"}>
+      <Box textAlign={"center"} padding={"10px"} margin={"auto"}>
         <h1>
           Click to{" "}
           <span style={{ fontSize: "30px", color: "#C71585" }}>
@@ -118,7 +113,7 @@ function myGreeting() {
           </span>{" "}
           to Gallery
         </h1>
-        <Box mt={3} fontWeight="bold">
+        <Box mt={3} fontWeight="bold" margin={"auto"}>
           <label>
             Add Button will Enable in few secs, wait for link generation
           </label>
@@ -142,16 +137,21 @@ function myGreeting() {
             </Button>
           </Flex>
           <Heading marginBottom="20px">My Gallery</Heading>
-          <SimpleGrid columns={[2, 2, 3, 4]} gap={3}>
+          <SimpleGrid
+            columns={[2, 2, 3, 4]}
+            gap={3}
+            width={"90%"}
+            margin={"auto"}
+          >
             {reversedItem.map((item) => (
-              <GridItem key={item._id}>
+              <Flex key={item._id} justifyContent={"center"}>
                 <img
-                  src={item.img}
+                  src={item.imageSrc}
                   alt={item.date}
-                  width={"100%"}
-                  borderRadius={"10px"}
+                 
+                 
                 />
-              </GridItem>
+              </Flex>
             ))}
           </SimpleGrid>
         </Box>
@@ -185,13 +185,13 @@ function myGreeting() {
                 "https://images.pexels.com/photos/2379179/pexels-photo-2379179.jpeg?auto=compress&cs=tinysrgb&w=600"
               }
               alt="braj"
-              width={"100%"}
+              width={"110%"}
             />
           </Box>
-          <Box width={"60%"}>
+          <Box width={"70%"}>
             <img
               src={
-                "https://images.pexels.com/photos/4214998/pexels-photo-4214998.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                "https://images.pexels.com/photos/935789/pexels-photo-935789.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               }
               alt="braj"
               width={"100%"}
@@ -199,7 +199,7 @@ function myGreeting() {
           </Box>
         </Flex>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

@@ -109,7 +109,7 @@ const AddTodo = () => {
         borderRadius={"10px"}
         width={["80vw", "80vw", "50vw"]}
       >
-        <Heading textAlign={"center"}>Your today's feeling</Heading>
+        <Heading textAlign={"center"}>Write your story...</Heading>
         <Text align={"center"} color={"grey"}>
           First upload image then write{" "}
         </Text>

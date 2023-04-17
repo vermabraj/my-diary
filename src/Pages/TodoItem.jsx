@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { deletePosts, getPosts } from "../Redux/post.action";
+import { BsCalendar2Date } from "react-icons/bs";
 
 import {
   Container,
@@ -52,7 +53,7 @@ export default function TodoItem() {
             <Heading
               lineHeight={1.1}
               fontWeight={600}
-              fontSize={{ base: "2xl", sm: "3xl", lg: "5xl" }}
+              fontSize={{ base: "md", sm: "2xl",md:"3xl", lg: "5xl" }}
             >
               <Text
                 as={"span"}
@@ -78,19 +79,20 @@ export default function TodoItem() {
               color={"gray.500"}
               minH="5vh"
               minW={"70%"}
-              fontSize={{ base: "md", sm: "lg", lg: "xl" }}
+              fontSize={{ base: "sm", sm: "lg",md:"xl", lg: "2xl" }}
             >
               {post.description}
             </Text>
             <Text
+            
               color={"gray.500"}
-              fontSize={{ base: "sm", sm: "sm", lg: "sm" }}
-              maxW="300px"
+              fontSize={{ base: "small", sm: "sm", lg: "lg" }}
+              maxW={["155px","170px","170px","220px"]}
               overflow="hidden"
               textOverflow={"ellipsis"}
               whiteSpace={"nowrap"}
             >
-              <strong>Written on :- </strong>
+            
               {post.date}
             </Text>
           </Stack>

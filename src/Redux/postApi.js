@@ -32,15 +32,25 @@ export const addPostApi = async (payload) => {
 
 export const getGalleryApi = async () => {
   let res = await axios.get(
-    "https://busy-jade-bass-coat.cyclic.app/personalgalleries"
+    "https://good-blue-cygnet-cuff.cyclic.app/gallery",
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
   );
   return res.data;
 };
 
 export const addGalleryApi = async (payload) => {
   let res = await axios.post(
-    "https://busy-jade-bass-coat.cyclic.app/personalgalleries/create",
-    payload
+    "https://good-blue-cygnet-cuff.cyclic.app/gallery/add",
+    payload,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
   );
   return res.data;
 };
