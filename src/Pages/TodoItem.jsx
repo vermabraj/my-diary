@@ -2,8 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { deletePosts, getPosts, updatePost } from "../Redux/post.action";
-import { BsCalendar2Date } from "react-icons/bs";
-
+import { Tooltip } from "@chakra-ui/react";
 import {
   Container,
   Stack,
@@ -72,7 +71,7 @@ const TodoItem = () => {
     reducerFunction,
     initialState
   );
-  const [id,setId] = useState("")
+  const [id, setId] = useState("");
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
@@ -80,7 +79,6 @@ const TodoItem = () => {
   const handleInputChange = (e) => setInput(e.target.value);
   const isError = input === "";
 
-  
   useEffect(() => {
     dispatch(getPosts());
   }, []);
@@ -88,10 +86,6 @@ const TodoItem = () => {
   const handleDelete = (id) => {
     dispatch(deletePosts(id));
   };
-
-
-
-
 
   let reversedItem = data.map((el) => el).reverse();
   if (loading)
@@ -103,7 +97,6 @@ const TodoItem = () => {
   if (error) return <h1>...Error</h1>;
   return (
     <Container maxW={"-moz-max-content"} fontStyle={"italic"}>
-     
       {reversedItem.map((post) => (
         <Stack
           align={"center"}
@@ -111,68 +104,114 @@ const TodoItem = () => {
           py={{ base: 20, md: 22 }}
           direction={{ base: "column", md: "row" }}
           key={post._id}
-          border={"3px solid yellow"}
+          bgGradient={[
+            "linear(to-tr, teal.400, yellow.500)",
+            "linear(to-t, yellow.500, teal.500)",
+            "linear(to-b, orange.200, purple.500)",
+          ]}
           borderRadius={"10px"}
           padding={"5vh"}
           margin={"5vh"}
         >
           <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-            <Heading
-              lineHeight={1.1}
-              fontWeight={600}
-              fontSize={{ base: "md", sm: "2xl", md: "3xl", lg: "5xl" }}
+            <Tooltip
+              label="Hey, I'm Title!"
+              aria-label="A tooltip"
+              bg="red.400"
+              placement="top-start"
+              hasArrow
+              arrowSize={15}
+            >
+              <Heading
+                lineHeight={1.1}
+                fontWeight={600}
+                fontSize={{ base: "md", sm: "2xl", md: "3xl", lg: "5xl" }}
+              >
+                <Text
+                  as={"span"}
+                  position={"relative"}
+                  _after={{
+                    content: "''",
+                    width: "full",
+                    height: "30%",
+                    position: "absolute",
+                    bottom: 1,
+                    left: 0,
+                    bg: "red",
+                    zIndex: -1,
+                  }}
+                >
+                  {post.title}
+                </Text>
+
+                <br />
+              </Heading>
+            </Tooltip>
+            <Tooltip
+              label="Hey, I'm Description!"
+              aria-label="A tooltip"
+              bg="red.400"
+              placement="top-start"
+              hasArrow
+              arrowSize={15}
             >
               <Text
-                as={"span"}
-                position={"relative"}
-                _after={{
-                  content: "''",
-                  width: "full",
-                  height: "30%",
-                  position: "absolute",
-                  bottom: 1,
-                  left: 0,
-                  bg: "pink",
-                  zIndex: -1,
-                }}
+                color={"gray.100"}
+                minH="5vh"
+                minW={"70%"}
+                fontSize={{ base: "sm", sm: "lg", md: "xl", lg: "2xl" }}
+                textDecoration={"underline"}
               >
-                {post.title}
+                {post.description}
               </Text>
-
-              <br />
-            </Heading>
-
-            <Text
-              color={"gray.500"}
-              minH="5vh"
-              minW={"70%"}
-              fontSize={{ base: "sm", sm: "lg", md: "xl", lg: "2xl" }}
+            </Tooltip>
+            <Tooltip
+              label="Date, when note was written!"
+              aria-label="A tooltip"
+              bg="red.400"
+              placement="top-start"
+              hasArrow
+              arrowSize={15}
             >
-              {post.description}
-            </Text>
-            <Text
-              color={"gray.500"}
-              fontSize={{ base: "small", sm: "sm", lg: "lg" }}
-              maxW={["155px", "170px", "170px", "220px"]}
-              overflow="hidden"
-              textOverflow={"ellipsis"}
-              whiteSpace={"nowrap"}
-            >
-              {post.date}
-            </Text>
-            <Flex align={"center"} justify={"space-between"}>
-              <Button
-                _hover={{ color: "red", paddingBottom: "5px" }}
-                margin={"10px"}
-                colorScheme={"none"}
-                color={"black"}
-                onClick={() => handleDelete(post._id)}
-                variant={"none"}
+              <Text
+                color={"gray.300"}
+                fontSize={{ base: "small", sm: "sm", lg: "lg" }}
+                maxW={["155px", "170px", "170px", "220px"]}
+                overflow="hidden"
+                textOverflow={"ellipsis"}
+                whiteSpace={"nowrap"}
               >
-                <RiDeleteBin6Line size={"25px"} />
-              </Button>
-             
-              <EditModal item={post}/>
+                {post.date}
+              </Text>
+            </Tooltip>
+            <Flex align={"center"} justify={"space-between"}>
+              <Tooltip
+                label="Click here to delete!"
+                aria-label="A tooltip"
+                bg="red.400"
+                placement="top-start"
+                hasArrow
+                arrowSize={15}
+              >
+                <Button
+                  _hover={{  border: "1px solid red"}}
+                  margin={"10px"}
+                  colorScheme={"none"}
+                  color={"black"}
+                  onClick={() => handleDelete(post._id)}
+                  variant={"none"}
+                >
+                  <RiDeleteBin6Line size={"35px"} color={"red"} />
+                </Button>
+              </Tooltip>
+              <Tooltip
+                label="Edit button!"
+                aria-label="A tooltip"
+                bg="red.400"
+                placement="top-start"
+              >
+                <EditModal item={post} />
+              </Tooltip>
             </Flex>
           </Stack>
           <Flex
@@ -189,14 +228,23 @@ const TodoItem = () => {
               boxShadow={"2xl"}
               overflow={"hidden"}
             >
-              <Image
-                alt={"Hero Image"}
-                fit={"cover"}
-                align={"center"}
-                h={"150px"}
-                src={post.imageSrc}
-                borderRadius={2}
-              />
+              <Tooltip
+                label="My photo, when i had write this note!"
+                aria-label="A tooltip"
+                bg="red.400"
+                placement="top-start"
+                hasArrow
+                arrowSize={15}
+              >
+                <Image
+                  alt={"Hero Image"}
+                  fit={"cover"}
+                  align={"center"}
+                  h={"150px"}
+                  src={post.imageSrc}
+                  borderRadius={2}
+                />
+              </Tooltip>
             </Box>
           </Flex>
         </Stack>

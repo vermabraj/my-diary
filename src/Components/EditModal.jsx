@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Tooltip } from "@chakra-ui/react";
 import {
   Button,
   Modal,
@@ -42,9 +42,24 @@ const EditModal = ({ item }) => {
 
   return (
     <div>
-      <Button variant={"unstyled"} onClick={onOpen} >
-        <BiEdit size={"25px"} />
-      </Button>
+      <Tooltip
+        label="Click here to update!"
+        aria-label="A tooltip"
+        bg="red.400"
+        placement="top-start"
+        hasArrow
+        arrowSize={15}
+      >
+        <Button
+        
+          variant={"unstyled"}
+          onClick={onOpen}
+          _hover={{ border: "1px solid yellow" }}
+        >
+          <BiEdit size={"35px"} color={"yellow"} />
+        </Button>
+      </Tooltip>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

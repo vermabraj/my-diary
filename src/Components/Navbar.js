@@ -24,6 +24,7 @@ import {
   Text,
   Center,
   useColorMode,
+  Tooltip,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -136,35 +137,53 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"} justify={"space-around"}>
-            <strong>
-              <Box
-                id="clock"
-                color="white"
-                fontSize={"2xl"}
-                border={"2px solid white"}
-                padding={"0px 10px 0px 10px"}
-                borderRadius={"5px"}
-                marginRight={"20px"}
-              ></Box>
-            </strong>
+            <Tooltip
+              label="Clock"
+              aria-label="A tooltip"
+              bg="red.400"
+              placement="top-start"
+              hasArrow
+              arrowSize={15}
+            >
+              <strong>
+                <Box
+                  id="clock"
+                  color="white"
+                  fontSize={"2xl"}
+                  border={"2px solid white"}
+                  padding={"0px 10px 0px 10px"}
+                  borderRadius={"5px"}
+                  marginRight={"20px"}
+                ></Box>
+              </strong>
+            </Tooltip>
 
             <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
+              <Tooltip
+                label="My profile"
+                aria-label="A tooltip"
+                bg="red.400"
+                placement="top-start"
+                hasArrow
+                arrowSize={15}
               >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    authState.isAuth
-                      ? "https://avatars.dicebear.com/api/male/username.svg"
-                      : "https://icon-library.com/images/icon-login/icon-login-12.jpg"
-                  }
-                />
-              </MenuButton>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    src={
+                      authState.isAuth
+                        ? "https://avatars.dicebear.com/api/male/username.svg"
+                        : "https://icon-library.com/images/icon-login/icon-login-12.jpg"
+                    }
+                  />
+                </MenuButton>
+              </Tooltip>
               <MenuList alignItems={"center"}>
                 <br />
                 <Center>

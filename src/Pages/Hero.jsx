@@ -37,7 +37,6 @@ export default function Hero() {
         px={useBreakpointValue({ base: 4, md: 8 })}
         bgGradient={"linear(to-r, blackAlpha.700, transparent)"}
       >
-        
         <Flex direction={"column"}>
           <Text
             color={"white"}
@@ -70,7 +69,7 @@ export default function Hero() {
               bg={{ bg: "blue.500" }}
               onClick={gotoGallery}
               border={"3px solid yellow"}
-              _hover={{ bg: "#C71585" }}
+              _hover={{ bg: "yellow", color: "black" }}
             >
               GALLERY
             </Button>
@@ -81,7 +80,7 @@ export default function Hero() {
               bg={{ bg: "whiteAlpha.500" }}
               onClick={gotoDiary}
               border={"3px solid yellow"}
-              _hover={{ bg: "#C71585" }}
+              _hover={{ bg: "yellow", color: "black" }}
             >
               DIARY
             </Button>
