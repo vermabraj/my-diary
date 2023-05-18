@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { deletePosts, getPosts } from "../Redux/post.action";
+import { deletePosts, getPosts, updatePost } from "../Redux/post.action";
 import { BsCalendar2Date } from "react-icons/bs";
 
 import {
@@ -18,26 +18,93 @@ import {
   createIcon,
   IconProps,
   useColorModeValue,
-
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Textarea,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 
+import { BiEdit } from "react-icons/bi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import loading_loader from "../assets/loading_loader.gif";
+import { toast } from "react-toastify";
+import EditModal from "../Components/EditModal";
 
-export default function TodoItem() {
+const initialState = {
+  title: "",
+  description: "",
+};
+const reducerFunction = (state, { type, payload }) => {
+  switch (type) {
+    case "title": {
+      return {
+        ...state,
+        title: payload,
+      };
+    }
+    case "description": {
+      return {
+        ...state,
+        description: payload,
+      };
+    }
+
+    default: {
+      return state;
+    }
+  }
+};
+
+const TodoItem = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { loading, error, data } = useSelector((store) => store.post);
-    const dispatch = useDispatch();
+  const [productState, setProductState] = useReducer(
+    reducerFunction,
+    initialState
+  );
+  const [id,setId] = useState("")
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-      dispatch(getPosts());
-    },[]);
+  const [input, setInput] = useState("");
 
-    
-    
-    if (loading) return <Flex justify={"center"}><img src={loading_loader} alt={"loader"} /></Flex>;
-    if (error) return <h1>..Error</h1>;
+  const handleInputChange = (e) => setInput(e.target.value);
+  const isError = input === "";
+
+  
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
+
+  const handleDelete = (id) => {
+    dispatch(deletePosts(id));
+  };
+
+
+
+
+
+  let reversedItem = data.map((el) => el).reverse();
+  if (loading)
+    return (
+      <Flex justify={"center"}>
+        <img src={loading_loader} alt={"loader"} />
+      </Flex>
+    );
+  if (error) return <h1>...Error</h1>;
   return (
-    <Container maxW={"7xl"} fontStyle={"italic"}>
-      {data.map((post) => (
+    <Container maxW={"-moz-max-content"} fontStyle={"italic"}>
+     
+      {reversedItem.map((post) => (
         <Stack
           align={"center"}
           spacing={{ base: 8, md: 10, lg: 5 }}
@@ -53,7 +120,7 @@ export default function TodoItem() {
             <Heading
               lineHeight={1.1}
               fontWeight={600}
-              fontSize={{ base: "md", sm: "2xl",md:"3xl", lg: "5xl" }}
+              fontSize={{ base: "md", sm: "2xl", md: "3xl", lg: "5xl" }}
             >
               <Text
                 as={"span"}
@@ -79,22 +146,34 @@ export default function TodoItem() {
               color={"gray.500"}
               minH="5vh"
               minW={"70%"}
-              fontSize={{ base: "sm", sm: "lg",md:"xl", lg: "2xl" }}
+              fontSize={{ base: "sm", sm: "lg", md: "xl", lg: "2xl" }}
             >
               {post.description}
             </Text>
             <Text
-            
               color={"gray.500"}
               fontSize={{ base: "small", sm: "sm", lg: "lg" }}
-              maxW={["155px","170px","170px","220px"]}
+              maxW={["155px", "170px", "170px", "220px"]}
               overflow="hidden"
               textOverflow={"ellipsis"}
               whiteSpace={"nowrap"}
             >
-            
               {post.date}
             </Text>
+            <Flex align={"center"} justify={"space-between"}>
+              <Button
+                _hover={{ color: "red", paddingBottom: "5px" }}
+                margin={"10px"}
+                colorScheme={"none"}
+                color={"black"}
+                onClick={() => handleDelete(post._id)}
+                variant={"none"}
+              >
+                <RiDeleteBin6Line size={"25px"} />
+              </Button>
+             
+              <EditModal item={post}/>
+            </Flex>
           </Stack>
           <Flex
             flex={1}
@@ -114,7 +193,7 @@ export default function TodoItem() {
                 alt={"Hero Image"}
                 fit={"cover"}
                 align={"center"}
-                h={"150%"}
+                h={"150px"}
                 src={post.imageSrc}
                 borderRadius={2}
               />
@@ -124,9 +203,7 @@ export default function TodoItem() {
       ))}
     </Container>
   );
-}
-
-
+};
 
 export const Blob = (props: IconProps) => {
   return (
@@ -146,3 +223,5 @@ export const Blob = (props: IconProps) => {
     </Icon>
   );
 };
+
+export default TodoItem;

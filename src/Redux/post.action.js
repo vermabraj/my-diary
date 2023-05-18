@@ -1,49 +1,60 @@
-import axios from "axios";
+
 import {
   ADD_GALLERY_SUCCESS,
   ADD_POST_FAILURE,
   ADD_POST_LOADING,
   ADD_POST_SUCCESS,
-    FILTER_BY_MR,
-    GALLERY_GET_ERROR,
-    GALLERY_GET_LOADING,
-    GALLERY_GET_SUCCESS,
-    POST_GET_DELETE,
+  FILTER_BY_MR,
+  GALLERY_GET_ERROR,
+  GALLERY_GET_LOADING,
+  GALLERY_GET_SUCCESS,
+  POST_GET_DELETE,
   POST_GET_ERROR,
   POST_GET_LOADING,
   POST_GET_SUCCESS,
+  POST_GET_UPDATE,
 } from "./post.types";
+import axios from "axios"
+import { addGalleryApi, addPostApi, deletePostApi, getGalleryApi, postApi } from "./postApi";
 
-import { addGalleryApi, addPostApi, getGalleryApi, postApi } from "./postApi";
-
-export const getPosts = () => async(dispatch) => {
+export const getPosts = () => async (dispatch) => {
   dispatch({ type: POST_GET_LOADING });
   try {
     let data = await postApi();
-    
+
     dispatch({ type: POST_GET_SUCCESS, payload: data });
   } catch (err) {
     dispatch({ type: POST_GET_ERROR });
   }
 };
-export const getPostsMr = () => async (dispatch) => {
+
+export const updatePost = (id,data) => async (dispatch) => {
+     console.log(id,data)  
+ try{
+   await axios.patch(
+    `https://good-blue-cygnet-cuff.cyclic.app/carts/update/${id}`,
+    data,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
   
- 
-    let data = await postApi();
-
-    dispatch({ type: FILTER_BY_MR, payload: data });
-
+ }catch(err){
+  throw err
+ }
 };
+
 export const deletePosts = (id) => async (dispatch) => {
- 
+  
   try {
-    let response = await axios.delete(
-      `https://busy-jade-bass-coat.cyclic.app/admin/delete/${id}`
-    );
+       let data = await deletePostApi(id);
     dispatch({
       type: POST_GET_DELETE,
       payload: id,
     });
+    
   } catch (e) {
     dispatch({
       type: POST_GET_ERROR,
@@ -51,14 +62,14 @@ export const deletePosts = (id) => async (dispatch) => {
     });
   }
 };
-export const addProducts = (payload) => async(dispatch) => {
-  dispatch({ type: ADD_POST_LOADING});
+export const addProducts = (payload) => async (dispatch) => {
+  dispatch({ type: ADD_POST_LOADING });
   try {
     let data = await addPostApi(payload);
-    
+
     dispatch({ type: ADD_POST_SUCCESS, payload: data });
   } catch (err) {
-    dispatch({ type: ADD_POST_FAILURE});
+    dispatch({ type: ADD_POST_FAILURE });
   }
 };
 

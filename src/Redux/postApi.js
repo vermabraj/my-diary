@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const postApi = async () => {
-  let res = await axios.get("https://good-blue-cygnet-cuff.cyclic.app/carts/", {
+  let res = await axios.get("https://good-blue-cygnet-cuff.cyclic.app/carts", {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -10,11 +10,18 @@ export const postApi = async () => {
 };
 
 export const deletePostApi = async (id) => {
+  
   let res = await axios.delete(
-    "https://busy-jade-bass-coat.cyclic.app/admin/delete/$(id)"
+    `https://good-blue-cygnet-cuff.cyclic.app/carts/delete/${id}`,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
   );
   return res.data;
 };
+
 
 export const addPostApi = async (payload) => {
   let res = await axios.post(
