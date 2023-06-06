@@ -13,24 +13,10 @@ import {
   Button,
   Image,
   Icon,
-  IconButton,
-  createIcon,
   IconProps,
-  useColorModeValue,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
+  
   useDisclosure,
-  Textarea,
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-  FormErrorMessage,
+  
 } from "@chakra-ui/react";
 
 import { BiEdit } from "react-icons/bi";
@@ -85,6 +71,7 @@ const TodoItem = () => {
 
   const handleDelete = (id) => {
     dispatch(deletePosts(id));
+   
   };
 
   let reversedItem = data.map((el) => el).reverse();

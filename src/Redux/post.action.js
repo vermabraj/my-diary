@@ -1,4 +1,3 @@
-
 import {
   ADD_GALLERY_SUCCESS,
   ADD_POST_FAILURE,
@@ -14,8 +13,14 @@ import {
   POST_GET_SUCCESS,
   POST_GET_UPDATE,
 } from "./post.types";
-import axios from "axios"
-import { addGalleryApi, addPostApi, deletePostApi, getGalleryApi, postApi } from "./postApi";
+import axios from "axios";
+import {
+  addGalleryApi,
+  addPostApi,
+  deletePostApi,
+  getGalleryApi,
+  postApi,
+} from "./postApi";
 
 export const getPosts = () => async (dispatch) => {
   dispatch({ type: POST_GET_LOADING });
@@ -28,33 +33,32 @@ export const getPosts = () => async (dispatch) => {
   }
 };
 
-export const updatePost = (id,data) => async (dispatch) => {
-     console.log(id,data)  
- try{
-   await axios.patch(
-    `https://good-blue-cygnet-cuff.cyclic.app/carts/update/${id}`,
-    data,
-    {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    }
-  );
-  
- }catch(err){
-  throw err
- }
+export const updatePost = (id, data) => async (dispatch) => {
+  try {
+    await axios.patch(
+      `https://good-blue-cygnet-cuff.cyclic.app/carts/update/${id}`,
+      data,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+
+    dispatch(getPosts());
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const deletePosts = (id) => async (dispatch) => {
-  
   try {
-       let data = await deletePostApi(id);
+    let data = await deletePostApi(id);
     dispatch({
       type: POST_GET_DELETE,
       payload: id,
     });
-    
+    dispatch(getPosts());
   } catch (e) {
     dispatch({
       type: POST_GET_ERROR,

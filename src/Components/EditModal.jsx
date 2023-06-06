@@ -23,7 +23,6 @@ import { BiEdit } from "react-icons/bi";
 
 const EditModal = ({ item }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
 
   const [data, setData] = React.useState({
     _id: item._id,
@@ -38,8 +37,6 @@ const EditModal = ({ item }) => {
   const handleInputChange = (e) => setInput(e.target.value);
   const isError = input === "";
 
-  
-
   return (
     <div>
       <Tooltip
@@ -51,7 +48,6 @@ const EditModal = ({ item }) => {
         arrowSize={15}
       >
         <Button
-        
           variant={"unstyled"}
           onClick={onOpen}
           _hover={{ border: "1px solid yellow" }}
